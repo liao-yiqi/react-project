@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useRef} from "react";
 import './App.scss'
 import avatar from './images/bozai.png'
 import classNames from "classnames/dedupe";
@@ -57,6 +57,7 @@ const App = () => {
     const onDelete = (id) => {
         setList(list.filter(item => item.personId !== id))
     }
+
     const [activeTab, setActiveTab] = useState('hot');
     const onToggle = (type) => {
         setActiveTab(type)
@@ -68,6 +69,27 @@ const App = () => {
         }
         setList(newList)
     }
+    const [value, setValue] = useState('')
+
+    const inputRef = useRef(null);
+
+    const catchDOM = () => {
+        let newObj = {
+            personId: new Date(),
+            user: {
+                uid: '30009257',
+                avatar,
+                uname: 'react',
+            },
+            content: value,
+            ctime: '10-28 07:00',
+            like: 50,
+        }
+        setList(newList => [...newList, newObj])
+        setValue('')
+        inputRef.current.focus()
+    }
+
     return (
         <div className='app'>
             <div className="reply-navigation">
@@ -102,11 +124,14 @@ const App = () => {
                     </div>
                     <div className='reply-box-wrap'>
                         <textarea
+                            ref={inputRef}
                             className="reply-box-textarea"
                             placeholder="发一条友善的评论"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
                         />
                         <div className="reply-box-send">
-                            <div className="send-text">发布</div>
+                            <div className="send-text" onClick={catchDOM}>发布</div>
                         </div>
                     </div>
                 </div>

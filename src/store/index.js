@@ -1,10 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
-import foodsReducer from "./modules/takeaway";
 
 const store = configureStore({
-    reducer: {
-        foods: foodsReducer
-    }
+    reducer: {}
 })
 
 export default store

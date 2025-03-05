@@ -5,26 +5,11 @@ import classNames from "classnames";
 import dayjs from "dayjs";
 import {useSelector} from "react-redux";
 import _ from "lodash";
+import DailyBill from './components/DayBill/DayBill'
 
-const Month = () => {
-    const [dateVisible, setDateVisible] = useState(false);
-    const [currentDate, setCurrentDate] = useState(() => {
-        return dayjs(new Date()).format('YYYY-MM')
-    })
-    const [currentMonthList, setMonthList] = useState([]);
-    const confirm = (date) => {
-        setDateVisible(false)
-        setCurrentDate(String(dayjs(date).format('YYYY-MM')))
-        const formatDate = dayjs(date).format('YYYY-MM')
-        setMonthList(monthGroup[formatDate] ?? [])
-    }
-    const billList = useSelector(state => state.bill.billList)
-    const monthGroup = useMemo(() => {
-        return _.groupBy(billList, (item) => dayjs(item.date).format('YYYY-MM'))
-    }, [billList]);
-    const monthResult = useMemo(() => {
-        const result = currentMonthList.reduce(
-            (acc, {type, money}) => {
+function useSummary(list) {
+    return useMemo(() => {
+        const result = list.reduce((acc, {type, money}) => {
                 if (type === 'pay') {
                     acc.pay += money;
                 } else if (type === 'income') {
@@ -36,11 +21,41 @@ const Month = () => {
         );
         result.total = result.pay + result.income;
         return result;
-    }, [currentMonthList]);
+    }, [list]);
+}
+
+const Month = () => {
+    const [dateVisible, setDateVisible] = useState(false);
+    const [currentDate, setCurrentDate] = useState(() => {
+        return dayjs(new Date()).format('YYYY-MM')
+    })
+    const [currentMonthList, setMonthList] = useState([]);
+    const billList = useSelector(state => state.bill.billList)
+    const monthGroup = useMemo(() => {
+        return _.groupBy(billList, (item) => dayjs(item.date).format('YYYY-MM'))
+    }, [billList]);
+
+    const monthResult = useSummary(currentMonthList)
+
+    const confirm = (date) => {
+        setDateVisible(false)
+        setCurrentDate(String(dayjs(date).format('YYYY-MM')))
+        const formatDate = dayjs(date).format('YYYY-MM')
+        setMonthList(monthGroup[formatDate] ?? [])
+    }
 
     useEffect(() => {
         if (monthGroup[currentDate]) setMonthList(monthGroup[currentDate])
     }, []);
+
+    const dayGroup = useMemo(() => {
+        const groupData = _.groupBy(currentMonthList, (item) => dayjs(item.date).format('YYYY-MM-DD'))
+        const keys = Object.keys(groupData)
+        return {
+            groupData,
+            keys
+        }
+    }, [currentMonthList]);
 
     return (
         <div className='monthlyBill'>
@@ -77,6 +92,18 @@ const Month = () => {
                         onClose={() => setDateVisible(false)}
                         onConfirm={confirm}
                     />
+                </div>
+                <div className='group'>
+                    {dayGroup.keys.map(item => {
+                        return (
+                            <DailyBill
+                                key={item + new Date().getTime()}
+                                date={item}
+                                billList={dayGroup.groupData[item]}
+                                summary={useSummary}
+                            />
+                        )
+                    })}
                 </div>
             </div>
         </div>

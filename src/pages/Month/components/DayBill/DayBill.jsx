@@ -1,7 +1,7 @@
 import './dayBill.scss'
 import {useState} from "react";
 import classNames from "classnames";
-import {billTypeToName} from "@/pages/contants/contants";
+import {billTypeToName} from "@/contants/contants";
 import Icon from "@/component/Icon/icon";
 
 const DayBill = ({date, billList, summary}) => {

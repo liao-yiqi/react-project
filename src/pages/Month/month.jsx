@@ -87,7 +87,8 @@ const Month = () => {
                     </div>
                     <DatePicker
                         title="记账日期"
-                        precision="month" visible={dateVisible}
+                        precision="month"
+                        visible={dateVisible}
                         max={new Date()}
                         onClose={() => setDateVisible(false)}
                         onConfirm={confirm}

@@ -14,7 +14,8 @@ export const billListData = {
             name: '出行交通',
             list: [
                 {type: 'taxi', name: '打车租车'},
-                {type: 'longDistance', name: '旅行票费'},
+                // {type: 'longDistance', name: '旅行票费'},
+                {type: 'taxi', name: '旅行票费'},
             ],
         },
         {
@@ -47,10 +48,10 @@ export const billListData = {
     income: [
         {
             type: 'professional',
-            name: '其他支出',
+            name: '工作其他收入',
             list: [
                 {type: 'salary', name: '工资'},
-                {type: 'overtimePay', name: '加班'},
+                {type: 'salary', name: '加班'},
                 {type: 'bonus', name: '奖金'},
             ],
         },
@@ -59,7 +60,7 @@ export const billListData = {
             name: '其他收入',
             list: [
                 {type: 'financial', name: '理财收入'},
-                {type: 'cashGift', name: '礼金收入'},
+                {type: 'financial', name: '礼金收入'},
             ],
         },
     ],

@@ -16,7 +16,7 @@ const Year = () => {
     const maxMonth = dayjs().get('year') === selectedYear ? dayjs().get('month') + 1 : 12
     const monthBillList = new Array(maxMonth).fill('').map((_, month) => {
         return getMonthOverview(selectedYearBills, month)
-    })
+    }).reverse()
     return (
         <div className='yearlyBill'>
             <DatePicker

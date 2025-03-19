@@ -1,13 +1,18 @@
 import './login.scss'
 import logo from '@/assets/logo.png'
-import {Button, Card, Form, Input} from "antd";
-import {useState} from "react";
+import {Button, Card, Form, Input, message} from "antd";
+import {useDispatch} from "react-redux";
+import {fetchLogin} from "@/store/modules/user.js";
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
-    const [phone, setPhone] = useState('')
-    const [code, setCode] = useState('')
-    const onSubmit = (values) => {
-        console.log(values)
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const onSubmit = async (values) => {
+        // 13800000002 246810
+        await dispatch(fetchLogin(values))
+        navigate('/')
+        message.success('登录成功')
     }
     return (
         <div className='login'>
@@ -15,7 +20,7 @@ const Login = () => {
                 <img className='login-logo' src={logo} alt=""/>
                 <Form validateTrigger='onBlur' autoComplete="off" onFinish={onSubmit}>
                     <Form.Item
-                        name='phoneNumber'
+                        name='mobile'
                         rules={[
                             {required: true, message: '请输入手机号'},
                             {pattern: /^1[3-9]\d{9}/, message: '请输入正确的手机号格式'}

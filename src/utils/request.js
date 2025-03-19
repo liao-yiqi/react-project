@@ -1,5 +1,5 @@
 import axios from "axios";
-import {clearToken, getToken} from "@/utils/token.js";
+import {REMOVE_TOKEN, GET_TOKEN,} from "@/utils/token.js";
 import router from "@/router/index.jsx";
 import {message} from "antd";
 
@@ -9,7 +9,7 @@ const request = axios.create({
 })
 
 request.interceptors.request.use(config => {
-    const token = getToken()
+    const token = GET_TOKEN()
     if (token) config.header.Authorization = `Bearer ${token}`
     return config
 
@@ -21,7 +21,7 @@ request.interceptors.response.use(response => {
     return response.data
 }, (error) => {
     if (error.response.status === 401) {
-        clearToken()
+        REMOVE_TOKEN()
         router.navigate('/login')
         window.location.reload()
     } else if (error.response.status === 400) {

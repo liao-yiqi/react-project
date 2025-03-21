@@ -7,3 +7,10 @@ export const login = (data) => {
         data
     })
 }
+
+export const getProfile = () => {
+    return request({
+        url: '/user/profile',
+        method: 'GET'
+    })
+}

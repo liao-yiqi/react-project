@@ -3,20 +3,13 @@ import {Breadcrumb, Button, Card, Form, Input, message, Select, Space, Radio, Up
 import {Link} from "react-router-dom";
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import {useEffect, useState} from "react";
-import {createArticleAPI, getChannelsAPI} from "@/api/publish.js";
+import {useState} from "react";
+import {createArticleAPI} from "@/api/publish.js";
 import {PlusOutlined} from "@ant-design/icons";
+import {useChannel} from "@/hooks/useChannel.js";
 
 const Publish = () => {
-    const [channels, setChannels] = useState([])
-    useEffect(() => {
-        async function getChannelsData() {
-            const {data} = await getChannelsAPI()
-            setChannels(data.channels)
-        }
-
-        getChannelsData()
-    }, []);
+    const {channelList} = useChannel()
     const imagesType = [
         {value: 1, name: '单图'},
         {value: 3, name: '三图'},
@@ -82,7 +75,7 @@ const Publish = () => {
                         <Select
                             placeholder="请选择文章频道"
                             style={{width: 400}}
-                            options={channels.map(item => ({value: item.id, label: item.name}))}
+                            options={channelList.map(item => ({value: item.id, label: item.name}))}
                             allowClear
                         />
                     </Form.Item>

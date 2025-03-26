@@ -9,7 +9,7 @@ import 'normalize.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <Suspense>
+    <Suspense fallback={'加载中...'}>
         <Provider store={store}>
             <RouterProvider router={router}/>
         </Provider>

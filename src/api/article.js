@@ -7,3 +7,25 @@ export const getArticleListAPI = (params) => {
         params
     })
 }
+
+export const delArticleAPI = (id) => {
+    return request({
+        url: `/mp/articles/${id}`,
+        method: 'DELETE'
+    })
+}
+
+export const getArticleById = (id) => {
+    return request({
+        url: `/mp/articles/${id}`,
+        method: 'get'
+    })
+}
+
+export const updateArticleAPI = (data) => {
+    return request({
+        url: '/mp/articles?draft=false',
+        method: 'POST',
+        data
+    })
+}

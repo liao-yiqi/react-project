@@ -2,7 +2,7 @@ import './publish.scss'
 import {Breadcrumb, Button, Card, Form, Input, message, Select, Space, Radio, Upload} from "antd";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import ReactQuillNew from 'react-quill-new'
-import 'react-quill/dist/quill.snow.css'
+import 'react-quill-new/dist/quill.snow.css'
 import {useEffect, useState} from "react";
 import {createArticleAPI} from "@/api/publish.js";
 import {PlusOutlined} from "@ant-design/icons";

@@ -1,6 +1,10 @@
 import {createRoot} from 'react-dom/client'
-import App from './App.tsx'
+import {Suspense} from "react";
+import {RouterProvider} from "react-router-dom";
+import router from "./router";
 
 createRoot(document.getElementById('root')!).render(
-    <App/>
+    <Suspense>
+        <RouterProvider router={router}/>
+    </Suspense>
 )
